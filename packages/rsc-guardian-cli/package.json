@@ -1,0 +1,46 @@
+{
+  "name": "rsc-guardian-cli",
+  "version": "1.0.0",
+  "description": "CLI tool to analyze and split React Server Components",
+  "main": "dist/index.js",
+  "bin": {
+    "rsc-guardian": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devchospre001/react-rsc-sentinel.git",
+    "directory": "packages/rsc-guardian-cli"
+  },
+  "author": "Abdul-Kerim Spreco",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "react",
+    "server-components",
+    "rsc",
+    "codemod",
+    "cli"
+  ],
+  "dependencies": {
+    "@typescript-eslint/typescript-estree": "^6.13.0",
+    "commander": "^11.1.0",
+    "diff": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^5.0.8",
+    "@types/node": "^20.10.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}
+

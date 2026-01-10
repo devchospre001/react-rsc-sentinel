@@ -1,0 +1,12 @@
+{
+  "plugins": ["rsc-guardian"],
+  "rules": {
+    "rsc-guardian/no-client-in-server": [
+      "error",
+      {
+        "autoFix": false
+      }
+    ]
+  }
+}
+

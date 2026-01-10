@@ -1,0 +1,21 @@
+{
+  "name": "react-rsc-sentinel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo for React Server Component linting and splitting tools",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test",
+    "lint": "yarn workspaces run lint",
+    "dev": "yarn workspaces run dev"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "yarn@1.22.19"
+}
+

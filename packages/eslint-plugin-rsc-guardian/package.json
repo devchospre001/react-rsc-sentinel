@@ -1,0 +1,48 @@
+{
+  "name": "eslint-plugin-rsc-guardian",
+  "version": "1.0.0",
+  "description": "ESLint plugin to detect illegal React Server Component usage",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devchospre001/react-rsc-sentinel.git",
+    "directory": "packages/eslint-plugin-rsc-guardian"
+  },
+  "author": "Abdul-Kerim Spreco",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "react",
+    "server-components",
+    "rsc"
+  ],
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/types": "^6.13.0",
+    "@typescript-eslint/utils": "^6.13.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.56.0",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@typescript-eslint/rule-tester": "^6.13.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}
+
