@@ -252,5 +252,5 @@ react-rsc-sentinel/
 
 ## License
 
-MIT
+MIT 
 
