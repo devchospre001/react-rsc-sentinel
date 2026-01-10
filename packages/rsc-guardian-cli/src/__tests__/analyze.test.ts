@@ -1,14 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import * as path from 'path';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
 import { analyze } from '../analyze';
 
-// Get __dirname equivalent for CommonJS
-declare const __dirname: string;
+// Get __dirname equivalent for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('analyze', () => {
-  // Use a relative path from the test file location
-  const fixturesDir = path.resolve(process.cwd(), 'packages/rsc-guardian-cli/__fixtures__');
+  // Use path relative to test file location
+  const fixturesDir = path.resolve(__dirname, '../../__fixtures__');
 
   it('should detect hooks in component', async () => {
     const filePath = path.join(fixturesDir, 'with-hooks.tsx');
