@@ -1,0 +1,73 @@
+name: Version Bump
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version type (patch, minor, major)'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      package:
+        description: 'Package to bump (or "all")'
+        required: true
+        type: choice
+        options:
+          - all
+          - eslint-plugin-rsc-guardian
+          - rsc-guardian-cli
+
+jobs:
+  bump-version:
+    name: Bump Version and Create Tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Bump version for ${{ inputs.package }}
+        run: |
+          if [ "${{ inputs.package }}" = "all" ]; then
+            cd packages/eslint-plugin-rsc-guardian
+            npm version ${{ inputs.version_type }} --no-git-tag-version
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            cd ../rsc-guardian-cli
+            npm version ${{ inputs.version_type }} --no-git-tag-version
+            cd ../..
+          else
+            cd packages/${{ inputs.package }}
+            npm version ${{ inputs.version_type }} --no-git-tag-version
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            cd ../..
+          fi
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+      
+      - name: Commit version bump
+        run: |
+          git add packages/*/package.json
+          git commit -m "chore: bump version to ${{ env.NEW_VERSION }}"
+          git push
+      
+      - name: Create tag
+        run: |
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Release v${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
+

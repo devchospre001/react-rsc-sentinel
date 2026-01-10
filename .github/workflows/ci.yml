@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  lint-and-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        package:
+          - eslint-plugin-rsc-guardian
+          - rsc-guardian-cli
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build ${{ matrix.package }}
+        run: |
+          cd packages/${{ matrix.package }}
+          npm run build
+      
+      - name: Lint ${{ matrix.package }}
+        run: |
+          cd packages/${{ matrix.package }}
+          npm run lint
+      
+      - name: Test ${{ matrix.package }}
+        run: |
+          cd packages/${{ matrix.package }}
+          npm test
+
+  build-all:
+    name: Build All Packages
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build all packages
+        run: npm run build
+      
+      - name: Verify dist folders
+        run: |
+          test -d packages/eslint-plugin-rsc-guardian/dist || exit 1
+          test -d packages/rsc-guardian-cli/dist || exit 1
+          echo "✓ All packages built successfully"
+
