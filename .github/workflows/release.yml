@@ -32,13 +32,13 @@ jobs:
       
       - name: Publish eslint-plugin-rsc-guardian
         working-directory: packages/eslint-plugin-rsc-guardian
-        run: npm publish --access public
+        run: npm publish --access public --workspaces=false
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Publish rsc-guardian-cli
         working-directory: packages/rsc-guardian-cli
-        run: npm publish --access public
+        run: npm publish --access public --workspaces=false
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
